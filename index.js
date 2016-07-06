@@ -1,5 +1,5 @@
 'use strict';
-
+let Promise = require('bluebird');
 /**
  * @package mongoose-paginate
  * @param {Object} [query={}]
@@ -64,9 +64,10 @@ function paginate(query, options, callback) {
   }
   promises = Object.keys(promises).map((x) => promises[x]);
   return Promise.all(promises).then((data) => {
+    let count = data[1];
     let result = {
-      data: data[0],
-      total: data[1],
+      data: (limit > 0) ? data[0] : [],
+      total: count,
       limit: limit
     };
     if (offset !== undefined) {
@@ -74,7 +75,7 @@ function paginate(query, options, callback) {
     }
     if (page !== undefined) {
       result.page = page;
-      result.pages = Math.ceil(data.count / limit) || 1;
+      result.pages = Math.ceil(count / limit) || 1;
     }
     if (typeof callback === 'function') {
       return callback(null, result);
