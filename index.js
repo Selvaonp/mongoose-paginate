@@ -50,22 +50,23 @@ function paginate(query, options, callback) {
       });
     }
     promises = {
-      data: docsQuery.exec(),
+      docs: docsQuery.exec(),
       count: this.count(query).exec()
     };
     if (lean && leanWithId) {
-      promises.data = promises.data.then((data) => {
-        data.forEach((dataItem) => {
-          dataItem.id = String(dataItem._id);
+      promises.docs = promises.docs.then((docs) => {
+        docs.forEach((doc) => {
+          doc.id = String(doc._id);
         });
-        return data;
+        return docs;
       });
     }
   }
   promises = Object.keys(promises).map((x) => promises[x]);
   return Promise.all(promises).then((data) => {
+  console.log('data updated', data);
     let result = {
-      data: data.data,
+      data: data[0],
       total: data.count,
       limit: limit
     };
