@@ -33,7 +33,6 @@ function paginate(query, options, callback) {
     page = options.page;
     skip = (page - 1) * limit;
   } else {
-    page = 1;
     offset = 0;
     skip = offset;
   }
