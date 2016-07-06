@@ -67,9 +67,10 @@ function paginate(query, options, callback) {
   console.log('data updated', data);
     let result = {
       data: data[0],
-      total: data.count,
+      total: data[1],
       limit: limit
     };
+    console.log('result', result);
     if (offset !== undefined) {
       result.offset = offset;
     }
