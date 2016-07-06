@@ -64,13 +64,11 @@ function paginate(query, options, callback) {
   }
   promises = Object.keys(promises).map((x) => promises[x]);
   return Promise.all(promises).then((data) => {
-  console.log('data updated', data);
     let result = {
       data: data[0],
       total: data[1],
       limit: limit
     };
-    console.log('result', result);
     if (offset !== undefined) {
       result.offset = offset;
     }
